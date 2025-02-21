@@ -1,5 +1,5 @@
 .searchContainer {
-  height: 33vh;
+  height: 15vh;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -9,12 +9,13 @@
   display: flex;
   width: 100%;
   max-width: 1400px;
-  padding-top: 20px;
+  padding-top: 25px;
 }
 
 .titleInput {
   flex: 1;
   padding: 10px;
+  margin: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
@@ -24,6 +25,7 @@
 .descriptionInput {
   flex: 2;
   padding: 10px;
+  margin: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
@@ -33,16 +35,34 @@
 .searchButton {
   flex: 1;
   padding: 10px 20px;
+  margin: 5px;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  width: 5px;
+  width: 10%;
   transition: background-color 0.3s ease;
 }
 
 .searchButton:hover {
   background-color: #0056b3;
+}
+/* Loader inside button (next to text) */
+.loader {
+  width: 14px;
+  height: 14px;
+  border: 2px solid white;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

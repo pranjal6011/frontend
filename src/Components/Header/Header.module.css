@@ -29,4 +29,5 @@
     margin: 0; /* Remove default margin */
     font-size: 2rem; /* Adjust font size as needed */
     font-weight: bold; /* Bold for emphasis */
+    color: white;
   }
