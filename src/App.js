@@ -6,7 +6,7 @@ import HistoricalTicket from "./Components/HistoricalTicket/HistoricalTicket";
 import "./App.css"; // Import the CSS file for styling
 
 const App = () => {
-  const [searchData, setSearchData] = useState({ tickets: [] , resolutions: [] });
+  const [searchData, setSearchData] = useState({ tickets: [] , resolution: {} });
 
 
   return (
@@ -16,7 +16,7 @@ const App = () => {
       <hr />
       <div className="contentContainer">
         <HistoricalTicket tickets={searchData.tickets} />
-        <KnowledgeBase resolutions={searchData.resolutions} />
+        <KnowledgeBase resolution={searchData.resolution} />
       </div>
     </div>
   );

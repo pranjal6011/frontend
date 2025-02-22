@@ -11,6 +11,7 @@ const HistoricalTicket = ({ tickets }) => {
   const closeModal = () => {
     setSelectedTicket(null);
   };
+
   return (
     <div className={styles.knowledgeBase}>
       <h4>Recommendation From Historical Tickets</h4>
@@ -33,7 +34,9 @@ const HistoricalTicket = ({ tickets }) => {
       {selectedTicket && (
         <div className={styles.modalOverlay} onClick={closeModal}>
           <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.closeButton} onClick={closeModal}>✖</button>
             <h2>{selectedTicket.Title}</h2>
+            <hr/>
             <p><strong>Number:</strong> {selectedTicket.Number}</p>
             <p><strong>Priority:</strong> {selectedTicket.Priority}</p>
             <p><strong>Category:</strong> {selectedTicket.Category}</p>
@@ -45,8 +48,7 @@ const HistoricalTicket = ({ tickets }) => {
             <p><strong>Assigned To:</strong> {selectedTicket.AssignedTo || "Unassigned"}</p>
             <p><strong>Assignment Group:</strong> {selectedTicket.AssignmentGroup}</p>
             <p><strong>Legal Entity:</strong> {selectedTicket.LegalEntity}</p>
-            <p><strong>Description:</strong> {selectedTicket.Description || "No description available"}</p>
-            <button onClick={closeModal} className={styles.closeButton}>Close</button>
+            {/* <p><strong>Description:</strong> {selectedTicket.Description || "No description available"}</p> */}
           </div>
         </div>
       )}

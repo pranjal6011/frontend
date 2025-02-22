@@ -3,27 +3,26 @@ import styles from "./SearchBar.module.css";
 import API_BASE_URL from "../../config/environment";
 
 const SearchBar = ({ setSearchData }) => {
-  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
-  const titleInputRef = useRef(null);
+
+  const descriptionInputRef = useRef(null);
 
   React.useEffect(() => {
-    titleInputRef.current?.focus();
+    descriptionInputRef.current?.focus();
   }, []);
 
   const handleSearch = async (e) => {
     e.preventDefault();
-
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/tickets`, {
+      const response = await fetch(`${API_BASE_URL}/query`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ title, description }),
+        body: JSON.stringify({ query: description }),
       });
 
       if (!response.ok) {
@@ -31,15 +30,40 @@ const SearchBar = ({ setSearchData }) => {
       }
 
       const data = await response.json();
-      console.log("Data received:", data);
-      setSearchData(data);
+
+      // Extracting the text response
+      const extractedText =
+        data.res_kb.output.message.content?.[0].text || "No relevant data found.";
+      console.log("Extracted text:", extractedText);
+      const fetchedTickets = data.res_inc?.map(ticket => ({
+        Created: ticket.Created,
+        Number: ticket.Number,
+        Title: ticket.Title,
+        Priority: ticket.Priority,
+        Category: ticket.Category,
+        City: ticket.City,
+        Merged_Subcategory: ticket.Merged_Subcategory,
+        Merged_Thirdcategory: ticket.Merged_Thirdcategory,
+        Merged_Country: ticket.Merged_Country,
+        RequestedFor: ticket.RequestedFor, // Make sure this property exists in your data
+        AssignedTo: ticket["Assigned to"], //  Handle the space in the property name
+        AssignmentGroup: ticket["Assignment group"], // Handle space
+        LegalEntity: ticket["Legal Entity"], // Handle space
+        Description: ticket.Description,
+      })) || [];
+      setSearchData({
+        tickets: fetchedTickets,  // Set the tickets array
+        resolution: { text: extractedText } // Set the resolution text
+      });
+  
+
     } catch (error) {
       console.error("Error fetching data:", error);
+      setSearchData("Error fetching data. Please try again.");
     } finally {
       setLoading(false);
-      setTitle("");
       setDescription("");
-      titleInputRef.current?.focus();
+      descriptionInputRef.current?.focus();
     }
   };
 
@@ -47,24 +71,17 @@ const SearchBar = ({ setSearchData }) => {
     <div className={styles.searchContainer}>
       <form className={styles.searchForm} onSubmit={handleSearch}>
         <input
-          ref={titleInputRef}
+          ref={descriptionInputRef}
           type="text"
-          placeholder="Title"
-          className={styles.titleInput}
-          value={title}
-          required
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Description"
+          placeholder="Enter search query"
           className={styles.descriptionInput}
           value={description}
           required
           onChange={(e) => setDescription(e.target.value)}
+          disabled={loading}
         />
         <button type="submit" className={styles.searchButton} disabled={loading}>
-          Search {loading && <div className={styles.loader}></div>}
+          {loading ? <div className={styles.loader}></div> : "Search"}
         </button>
       </form>
     </div>
