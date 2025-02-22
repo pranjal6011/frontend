@@ -23,7 +23,7 @@ const HistoricalTicket = ({ tickets }) => {
               <p><strong>Number:</strong> {ticket.Number}</p>
               <p><strong>Priority:</strong> {ticket.Priority}</p>
               <p><strong>Category:</strong> {ticket.Category}</p>
-              <p><strong>City:</strong> {ticket.City}</p>
+              <p><strong>Country:</strong> {ticket.Merged_Country}</p>
             </div>
           ))
         ) : (

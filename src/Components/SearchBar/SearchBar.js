@@ -62,7 +62,7 @@ const SearchBar = ({ setSearchData }) => {
       setSearchData("Error fetching data. Please try again.");
     } finally {
       setLoading(false);
-      setDescription("");
+      // setDescription("");
       descriptionInputRef.current?.focus();
     }
   };
